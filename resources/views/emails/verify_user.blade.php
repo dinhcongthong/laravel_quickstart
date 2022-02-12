@@ -8,9 +8,8 @@
 
         <div>
             Thanks for creating an account with the verification demo app.
-            Please follow the link below to verify your email address
-            {{-- {{ route('register_verify', $confirmation_code) }} <br> --}}
-
+            Please follow the link below to verify your email address<br>
+            {{ route('register_verify', $verify_code) }} 
         </div>
 
     </body>

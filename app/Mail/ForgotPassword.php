@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class VerifyUser extends Mailable
+class ForgotPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,10 +16,9 @@ class VerifyUser extends Mailable
      *
      * @return void
      */
-    public function __construct($verify_code)
+    public function __construct($token)
     {
-        $this->code = $verify_code;
-        $this->mail = env('MAIL_USERNAME');
+        $this->token = $token;
     }
 
     /**
@@ -29,10 +28,6 @@ class VerifyUser extends Mailable
      */
     public function build()
     {
-        $title = 'Verify your email address';
-        $verify_code = $this->code;
-        return $this->view('emails.verify_user', compact('verify_code'))
-                ->from($this->mail,'ThomasDC')
-                ->subject($title);
+        return $this->view('emails.reset_password', ['token' => $this->token]);
     }
 }

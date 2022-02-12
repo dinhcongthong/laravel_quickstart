@@ -61,23 +61,7 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    // protected function create(array $data)
-    // {
-
-    //     return User::create([
-    //         'name' => $data['name'],
-    //         'phone' => $data['phone'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
-    // }
-
+    // create a record for user table from request and send email
     public function register (Request $request) {
         $data = $request->all();
         // return $data;
@@ -101,9 +85,12 @@ class RegisterController extends Controller
         } else {
             return back()->withInput()->withErrors(['errors' => 'Sorry your email was error we can not send verify email for you!']);
         }
-        return $status;
 
-        return view('auth.verify', $status);
+        return view('auth.verify', ['status' => $status]);
+    }
 
+    public function verify ($verify_code) {
+        $user = User::where('verify_code', $verify_code)->firstOrFail()->update(['verify_code' => null]);
+        return 'Your account was verified. Please click link below to go home <br><a href = "' . route('home') .'">' . route('home') . '</a>';
     }
 }
