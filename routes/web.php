@@ -20,3 +20,17 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Auth::routes();
 
+// admin pages
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('admin.users');
+    });
+    Route::get('/users', [App\Http\Controllers\AdminController::class, 'index'])->name('users');
+    Route::get('/users-datatables', [App\Http\Controllers\AdminController::class, 'getUser'])->name('users_datatable');
+});
+
+// Route::controller('datatables', [App\Http\Controllers\AdminController::class], [
+//     'anyData'  => 'datatables.data',
+//     'getIndex' => 'datatables',
+// ]);
+
