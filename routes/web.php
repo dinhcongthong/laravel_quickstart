@@ -18,5 +18,7 @@ Route::get('/verify-account/{verify_code?}', [App\Http\Controllers\Auth\Register
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/test-dtb', [App\Http\Controllers\HomeController::class, 'testDatatable'])->name('test_dtb');
+
 Auth::routes();
 
